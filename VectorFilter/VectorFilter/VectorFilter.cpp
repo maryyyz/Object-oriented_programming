@@ -1,4 +1,4 @@
-﻿﻿#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include <vector>
 
@@ -9,7 +9,7 @@ double dotProduct(const Vector3& v1, const Vector3& v2) {
 }
 
 int main() {
-    std::ifstream inputFile("C:\\Users\\pixel\\source\\repos\\VectorFilter\\x64\\Debug\\vectors.txt");
+    std::ifstream inputFile("C:\\Users\\pixel\\source\\repos\\Object-oriented_programming\\VectorFilter\\x64\\Debug\\vectors.txt");
     if (!inputFile) { std::cerr << "File opening error" << std::endl; return 1; }
 
     std::vector<Vector3> vectors, filteredVectors;
@@ -21,7 +21,7 @@ int main() {
     inputFile.close();
 
 
-    std::ofstream outputFile("C:\\Users\\pixel\\source\\repos\\VectorFilter\\x64\\Debug\\vectors.txt");
+    std::ofstream outputFile("C:\\Users\\pixel\\source\\repos\\Object-oriented_programming\\VectorFilter\\x64\\Debug\\vectors.txt");
     if (!outputFile) { std::cerr << "File recording error" << std::endl; return 1; }
     for (const auto& v : filteredVectors)
         outputFile << v.x << " " << v.y << " " << v.z << std::endl;
