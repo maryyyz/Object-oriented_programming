@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{a003f1d2-1191-4df2-a251-aaf1f9bc8b9a}</ProjectGuid>
+    <ProjectGuid>{1fdacf03-e579-469c-91f8-ac0aefd7d46d}</ProjectGuid>
     <RootNamespace>VectorFilter</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>

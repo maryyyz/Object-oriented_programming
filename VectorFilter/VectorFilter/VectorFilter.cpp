@@ -1,4 +1,4 @@
-﻿#include <iostream>
+﻿﻿#include <iostream>
 #include <fstream>
 #include <vector>
 
@@ -16,7 +16,7 @@ int main() {
     Vector3 temp, givenVector = { 1, 0, 0 };
     while (inputFile >> temp.x >> temp.y >> temp.z)
         if (dotProduct(temp, givenVector) != 0)
-            
+
             filteredVectors.push_back(temp);
     inputFile.close();
 
