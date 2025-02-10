@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 
-// Базовый класс "Мебель"
 class Furniture {
 protected:
     std::string name;
@@ -21,7 +20,6 @@ public:
     double getWidth() const { return width; }
 };
 
-// Класс "Комната"
 class Room {
 private:
     double length, width, height;
@@ -34,7 +32,6 @@ public:
     ~Room();
 };
 
-// Подклассы мебели
 class Chair : public Furniture {
 public:
     Chair(const std::string& name, double length, double width, double height);
