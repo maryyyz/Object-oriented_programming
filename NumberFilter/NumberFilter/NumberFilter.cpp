@@ -4,7 +4,7 @@
 #include <limits>
 
 int main() {
-    std::ifstream inputFile("C:\\Users\\pixel\\source\\repos\\NumberFilter\\x64\\Debug\\number.txt");
+    std::ifstream inputFile("C:\\Users\\pixel\\source\\repos\\Object-oriented_programming\\NumberFilter\\x64\\Debug\\number.txt");
     if (!inputFile) { std::cerr << "File opening error!" << std::endl; return 1; }
 
     std::vector<int> sequence, filteredNumbers;
@@ -25,7 +25,7 @@ int main() {
     for (int n : sequence) if (n != minValue) filteredNumbers.push_back(n);
     inputFile.close();
 
-    std::ofstream outputFile("C:\\Users\\pixel\\source\\repos\\NumberFilter\\x64\\Debug\\number.txt");
+    std::ofstream outputFile("C:\\Users\\pixel\\source\\repos\\Object-oriented_programming\\NumberFilter\\x64\\Debug\\number.txt");
     if (!outputFile) { std::cerr << "File recording error!" << std::endl; return 1; }
     for (int n : filteredNumbers) outputFile << n << " ";
 
