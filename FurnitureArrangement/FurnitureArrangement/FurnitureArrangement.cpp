@@ -5,7 +5,6 @@
 int main() {
     double roomLength, roomWidth, roomHeight;
 
-    // Ввод размеров комнаты
     std::cout << "Enter room dimensions (length width height): ";
     std::cin >> roomLength >> roomWidth >> roomHeight;
 
@@ -20,21 +19,18 @@ int main() {
         double length, width, height;
 
         std::cout << "\nEnter furniture name: ";
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очистка ввода
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::getline(std::cin, name);
 
         std::cout << "Enter dimensions (length width height): ";
         std::cin >> length >> width >> height;
 
-        // Выбираем тип мебели (здесь можно расширить)
         room.addFurniture(new Furniture(name, length, width, height));
     }
 
-    // Вывод информации о мебели
     std::cout << "\nFurniture in the room:\n";
     room.displayFurniture();
 
-    // Вывод свободной площади пола
     std::cout << "\nFree floor area: " << room.getFreeFloorArea() << " m^2\n";
 
     return 0;
