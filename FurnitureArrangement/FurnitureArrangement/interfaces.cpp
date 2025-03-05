@@ -41,23 +41,3 @@ Room::~Room() {
     }
     furniture.clear();
 }
-
-Chair::Chair(const std::string& name, double length, double width, double height)
-    : Furniture(name, length, width, height) {
-}
-
-Table::Table(const std::string& name, double length, double width, double height)
-    : Furniture(name, length, width, height) {
-}
-
-Sofa::Sofa(const std::string& name, double length, double width, double height)
-    : Furniture(name, length, width, height) {
-}
-
-Wardrobe::Wardrobe(const std::string& name, double length, double width, double height)
-    : Furniture(name, length, width, height) {
-}
-
-Bed::Bed(const std::string& name, double length, double width, double height)
-    : Furniture(name, length, width, height) {
-}

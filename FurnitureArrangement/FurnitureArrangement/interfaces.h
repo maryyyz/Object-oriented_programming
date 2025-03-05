@@ -32,29 +32,4 @@ public:
     ~Room();
 };
 
-class Chair : public Furniture {
-public:
-    Chair(const std::string& name, double length, double width, double height);
-};
-
-class Table : public Furniture {
-public:
-    Table(const std::string& name, double length, double width, double height);
-};
-
-class Sofa : public Furniture {
-public:
-    Sofa(const std::string& name, double length, double width, double height);
-};
-
-class Wardrobe : public Furniture {
-public:
-    Wardrobe(const std::string& name, double length, double width, double height);
-};
-
-class Bed : public Furniture {
-public:
-    Bed(const std::string& name, double length, double width, double height);
-};
-
 #endif // INTERFACES_H#pragma once
