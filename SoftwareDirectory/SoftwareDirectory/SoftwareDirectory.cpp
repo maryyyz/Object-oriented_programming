@@ -6,7 +6,6 @@
 
 using namespace std;
 
-// Класс Система аутентификации
 class AuthenticationSystem {
 public:
     bool login(string username, string password) {
@@ -18,7 +17,6 @@ public:
     }
 };
 
-// Класс Пользователь
 class User {
 public:
     string name;
@@ -28,7 +26,6 @@ public:
     void viewSoftware() { cout << "Просмотр ПО пользователя: " << name << endl; }
 };
 
-// Абстрактный класс Программное обеспечение
 class Software {
 protected:
     string name;
@@ -40,7 +37,6 @@ public:
     virtual ~Software() {}
 };
 
-// Класс Свободное ПО
 class FreeSoftware : public Software {
 public:
     FreeSoftware(string n, string m) : Software(n, m) {}
@@ -52,11 +48,10 @@ public:
     }
 };
 
-// Класс Условно-бесплатное ПО
 class Shareware : public Software {
 private:
     time_t installDate;
-    int trialPeriod; // в днях
+    int trialPeriod;
 public:
     Shareware(string n, string m, time_t d, int t) : Software(n, m), installDate(d), trialPeriod(t) {}
     void displayInfo() const override {
@@ -70,12 +65,11 @@ public:
     }
 };
 
-// Класс Коммерческое ПО
 class CommercialSoftware : public Software {
 private:
     double price;
     time_t installDate;
-    int licenseDuration; // в днях
+    int licenseDuration;
 public:
     CommercialSoftware(string n, string m, double p, time_t d, int l) : Software(n, m), price(p), installDate(d), licenseDuration(l) {}
     void displayInfo() const override {
@@ -103,8 +97,8 @@ int main() {
     time_t now = time(nullptr);
 
     softwareDatabase.push_back(new FreeSoftware("LibreOffice", "The Document Foundation"));
-    softwareDatabase.push_back(new Shareware("WinRAR", "RARLAB", now - 10 * 24 * 60 * 60, 30)); // 10 дней назад, срок 30 дней
-    softwareDatabase.push_back(new CommercialSoftware("Adobe Photoshop", "Adobe", 19999.99, now - 50 * 24 * 60 * 60, 365)); // 50 дней назад, срок 365 дней
+    softwareDatabase.push_back(new Shareware("WinRAR", "RARLAB", now - 10 * 24 * 60 * 60, 30));
+    softwareDatabase.push_back(new CommercialSoftware("Adobe Photoshop", "Adobe", 19999.99, now - 50 * 24 * 60 * 60, 365));
 
     cout << "Полная информация о программном обеспечении:\n";
     for (const auto& sw : softwareDatabase) {
