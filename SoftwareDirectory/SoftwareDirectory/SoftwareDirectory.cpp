@@ -6,6 +6,7 @@
 
 using namespace std;
 
+// Класс Система аутентификации
 class AuthenticationSystem {
 public:
     bool login(string username, string password) {
@@ -17,6 +18,7 @@ public:
     }
 };
 
+// Класс Пользователь
 class User {
 public:
     string name;
@@ -26,38 +28,42 @@ public:
     void viewSoftware() { cout << "Просмотр ПО пользователя: " << name << endl; }
 };
 
+// Абстрактный класс Программное обеспечение
 class Software {
 protected:
     string name;
     string manufacturer;
+    string category;
 public:
-    Software(string n, string m) : name(n), manufacturer(m) {}
+    Software(string n, string m, string c) : name(n), manufacturer(m), category(c) {}
     virtual void displayInfo() const = 0;
     virtual bool isAvailable() const = 0;
     virtual ~Software() {}
 };
 
+// Класс Свободное ПО
 class FreeSoftware : public Software {
 public:
-    FreeSoftware(string n, string m) : Software(n, m) {}
+    FreeSoftware(string n, string m, string c) : Software(n, m, c) {}
     void displayInfo() const override {
-        cout << "Свободное ПО: " << name << ", Производитель: " << manufacturer << endl;
+        cout << "Свободное ПО: " << name << ", Производитель: " << manufacturer << ", Категория: " << category << endl;
     }
     bool isAvailable() const override {
         return true;
     }
 };
 
+// Класс Условно-бесплатное ПО
 class Shareware : public Software {
 private:
     time_t installDate;
-    int trialPeriod;
+    int trialPeriod; // в днях
 public:
-    Shareware(string n, string m, time_t d, int t) : Software(n, m), installDate(d), trialPeriod(t) {}
+    Shareware(string n, string m, string c, time_t d, int t) : Software(n, m, c), installDate(d), trialPeriod(t) {}
     void displayInfo() const override {
         char buffer[26];
         ctime_s(buffer, sizeof(buffer), &installDate);
-        cout << "Условно-бесплатное ПО: " << name << ", Производитель: " << manufacturer << ", Дата установки: " << buffer;
+        cout << "Условно-бесплатное ПО: " << name << ", Производитель: " << manufacturer << ", Категория: " << category << ", Дата установки: " << buffer;
     }
     bool isAvailable() const override {
         time_t currentTime = time(nullptr);
@@ -65,17 +71,18 @@ public:
     }
 };
 
+// Класс Коммерческое ПО
 class CommercialSoftware : public Software {
 private:
     double price;
     time_t installDate;
-    int licenseDuration;
+    int licenseDuration; // в днях
 public:
-    CommercialSoftware(string n, string m, double p, time_t d, int l) : Software(n, m), price(p), installDate(d), licenseDuration(l) {}
+    CommercialSoftware(string n, string m, string c, double p, time_t d, int l) : Software(n, m, c), price(p), installDate(d), licenseDuration(l) {}
     void displayInfo() const override {
         char buffer[26];
         ctime_s(buffer, sizeof(buffer), &installDate);
-        cout << "Коммерческое ПО: " << name << ", Производитель: " << manufacturer << ", Цена: " << price << " руб., Дата установки: " << buffer;
+        cout << "Коммерческое ПО: " << name << ", Производитель: " << manufacturer << ", Категория: " << category << ", Цена: " << price << " руб., Дата установки: " << buffer;
     }
     bool isAvailable() const override {
         time_t currentTime = time(nullptr);
@@ -96,9 +103,9 @@ int main() {
     vector<Software*> softwareDatabase;
     time_t now = time(nullptr);
 
-    softwareDatabase.push_back(new FreeSoftware("LibreOffice", "The Document Foundation"));
-    softwareDatabase.push_back(new Shareware("WinRAR", "RARLAB", now - 10 * 24 * 60 * 60, 30));
-    softwareDatabase.push_back(new CommercialSoftware("Adobe Photoshop", "Adobe", 19999.99, now - 50 * 24 * 60 * 60, 365));
+    softwareDatabase.push_back(new FreeSoftware("LibreOffice", "The Document Foundation", "Офисные приложения"));
+    softwareDatabase.push_back(new Shareware("WinRAR", "RARLAB", "Архиваторы и утилиты для сжатия данных", now - 10 * 24 * 60 * 60, 30)); // 10 дней назад, срок 30 дней
+    softwareDatabase.push_back(new CommercialSoftware("Adobe Photoshop", "Adobe", "Графические редакторы", 19999.99, now - 50 * 24 * 60 * 60, 365)); // 50 дней назад, срок 365 дней
 
     cout << "Полная информация о программном обеспечении:\n";
     for (const auto& sw : softwareDatabase) {
