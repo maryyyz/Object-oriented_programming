@@ -37,7 +37,7 @@ public:
     }
 };
 
-class Worker {
+class NumHandlerThread {
 public:
     void runAdd(NumHandler& handler, bool sync) {
         for (int i = 0; i < 6; ++i) {
@@ -61,12 +61,11 @@ int main() {
 
     std::mutex mtx;
     NumHandler syncHandler(mtx);
-    Worker worker;
+    NumHandlerThread handlerThread;
 
     syncHandler.printInitial("Синхронный режим");
-
-    std::thread t1(&Worker::runAdd, &worker, std::ref(syncHandler), true);
-    std::thread t2(&Worker::runRemove, &worker, std::ref(syncHandler), true);
+    std::thread t1(&NumHandlerThread::runAdd, &handlerThread, std::ref(syncHandler), true);
+    std::thread t2(&NumHandlerThread::runRemove, &handlerThread, std::ref(syncHandler), true);
     t1.join();
     t2.join();
 
@@ -74,9 +73,8 @@ int main() {
 
     NumHandler asyncHandler(mtx);
     asyncHandler.printInitial("Асинхронный режим");
-
-    std::thread t3(&Worker::runAdd, &worker, std::ref(asyncHandler), false);
-    std::thread t4(&Worker::runRemove, &worker, std::ref(asyncHandler), false);
+    std::thread t3(&NumHandlerThread::runAdd, &handlerThread, std::ref(asyncHandler), false);
+    std::thread t4(&NumHandlerThread::runRemove, &handlerThread, std::ref(asyncHandler), false);
     t3.join();
     t4.join();
 
