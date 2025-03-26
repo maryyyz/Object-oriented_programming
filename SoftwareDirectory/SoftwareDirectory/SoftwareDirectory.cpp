@@ -4,39 +4,37 @@
 #include <ctime>
 #include <windows.h>
 
-using namespace std;
-
 class AuthenticationSystem {
 public:
-    bool login(string username, string password) {
-        cout << "Пользователь " << username << " вошел в систему." << endl;
+    bool login(std::string username, std::string password) {
+        std::cout << "Пользователь " << username << " вошел в систему." << std::endl;
         return true;
     }
-    void registerUser(string username) {
-        cout << "Пользователь " << username << " зарегистрирован." << endl;
+    void registerUser(std::string username) {
+        std::cout << "Пользователь " << username << " зарегистрирован." << std::endl;
     }
 };
 
 class User {
 public:
-    string name;
-    User(string n) : name(n) {}
-    void addSoftware() { cout << "Добавлено ПО для пользователя: " << name << endl; }
-    void deleteSoftware() { cout << "Удалено ПО для пользователя: " << name << endl; }
-    void viewSoftware() { cout << "Просмотр ПО пользователя: " << name << endl; }
+    std::string name;
+    User(std::string n) : name(n) {}
+    void addSoftware() { std::cout << "Добавлено ПО для пользователя: " << name << std::endl; }
+    void deleteSoftware() { std::cout << "Удалено ПО для пользователя: " << name << std::endl; }
+    void viewSoftware() { std::cout << "Просмотр ПО пользователя: " << name << std::endl; }
 };
 
 class SoftwareUpdate {
 private:
-    string version;
-    string description;
+    std::string version;
+    std::string description;
     time_t releaseDate;
 public:
-    SoftwareUpdate(string v, string d, time_t r) : version(v), description(d), releaseDate(r) {}
+    SoftwareUpdate(std::string v, std::string d, time_t r) : version(v), description(d), releaseDate(r) {}
     void displayUpdateInfo() const {
         char buffer[26];
         ctime_s(buffer, sizeof(buffer), &releaseDate);
-        cout << "Версия: " << version << ", Описание: " << description << ", Дата выхода: " << buffer;
+        std::cout << "Версия: " << version << ", Описание: " << description << ", Дата выхода: " << buffer;
     }
     bool isAvailable() const {
         time_t now = time(nullptr);
@@ -46,12 +44,12 @@ public:
 
 class Software {
 protected:
-    string name;
-    string manufacturer;
-    string category;
-    vector<SoftwareUpdate> updates;
+    std::string name;
+    std::string manufacturer;
+    std::string category;
+    std::vector<SoftwareUpdate> updates;
 public:
-    Software(string n, string m, string c) : name(n), manufacturer(m), category(c) {}
+    Software(std::string n, std::string m, std::string c) : name(n), manufacturer(m), category(c) {}
     virtual void displayInfo() const = 0;
     virtual bool isAvailable() const = 0;
     virtual ~Software() {}
@@ -59,7 +57,7 @@ public:
         updates.push_back(update);
     }
     void showUpdates() const {
-        cout << "Обновления для " << name << ":\n";
+        std::cout << "Обновления для " << name << ":\n";
         for (const auto& update : updates) {
             update.displayUpdateInfo();
         }
@@ -68,9 +66,9 @@ public:
 
 class FreeSoftware : public Software {
 public:
-    FreeSoftware(string n, string m, string c) : Software(n, m, c) {}
+    FreeSoftware(std::string n, std::string m, std::string c) : Software(n, m, c) {}
     void displayInfo() const override {
-        cout << "Свободное ПО: " << name << ", Производитель: " << manufacturer << ", Категория: " << category << endl;
+        std::cout << "Свободное ПО: " << name << ", Производитель: " << manufacturer << ", Категория: " << category << std::endl;
     }
     bool isAvailable() const override {
         return true;
@@ -82,11 +80,11 @@ private:
     time_t installDate;
     int trialPeriod;
 public:
-    Shareware(string n, string m, string c, time_t d, int t) : Software(n, m, c), installDate(d), trialPeriod(t) {}
+    Shareware(std::string n, std::string m, std::string c, time_t d, int t) : Software(n, m, c), installDate(d), trialPeriod(t) {}
     void displayInfo() const override {
         char buffer[26];
         ctime_s(buffer, sizeof(buffer), &installDate);
-        cout << "Условно-бесплатное ПО: " << name << ", Производитель: " << manufacturer << ", Категория: " << category << ", Дата установки: " << buffer;
+        std::cout << "Условно-бесплатное ПО: " << name << ", Производитель: " << manufacturer << ", Категория: " << category << ", Дата установки: " << buffer;
     }
     bool isAvailable() const override {
         time_t currentTime = time(nullptr);
@@ -100,11 +98,11 @@ private:
     time_t installDate;
     int licenseDuration;
 public:
-    CommercialSoftware(string n, string m, string c, double p, time_t d, int l) : Software(n, m, c), price(p), installDate(d), licenseDuration(l) {}
+    CommercialSoftware(std::string n, std::string m, std::string c, double p, time_t d, int l) : Software(n, m, c), price(p), installDate(d), licenseDuration(l) {}
     void displayInfo() const override {
         char buffer[26];
         ctime_s(buffer, sizeof(buffer), &installDate);
-        cout << "Коммерческое ПО: " << name << ", Производитель: " << manufacturer << ", Категория: " << category << ", Цена: " << price << " руб., Дата установки: " << buffer;
+        std::cout << "Коммерческое ПО: " << name << ", Производитель: " << manufacturer << ", Категория: " << category << ", Цена: " << price << " руб., Дата установки: " << buffer;
     }
     bool isAvailable() const override {
         time_t currentTime = time(nullptr);
@@ -122,7 +120,7 @@ int main() {
     user.addSoftware();
     user.viewSoftware();
 
-    vector<Software*> softwareDatabase;
+    std::vector<Software*> softwareDatabase;
     time_t now = time(nullptr);
 
     softwareDatabase.push_back(new FreeSoftware("LibreOffice", "The Document Foundation", "Офисные приложения"));
@@ -133,10 +131,10 @@ int main() {
     softwareDatabase[2]->addUpdate(SoftwareUpdate("24.2", "Добавлены новые фильтры", now - 1 * 24 * 60 * 60));
     softwareDatabase[2]->showUpdates();
 
-    cout << "Полная информация о программном обеспечении:\n";
+    std::cout << "Полная информация о программном обеспечении:\n";
     for (const auto& sw : softwareDatabase) {
         sw->displayInfo();
-        cout << "Доступно для использования: " << (sw->isAvailable() ? "Да" : "Нет") << endl << endl;
+        std::cout << "Доступно для использования: " << (sw->isAvailable() ? "Да" : "Нет") << std::endl << std::endl;
     }
 
     for (auto& sw : softwareDatabase) {
