@@ -17,13 +17,21 @@ char getRandomPunct() {
 
 DWORD WINAPI RunningLine(LPVOID) {
     for (int i = 0; i < 12; ++i) {
-        if (sync) EnterCriticalSection(&cs);
+        if (sync) {
+            EnterCriticalSection(&cs);
+        }
 
-        if (!buffer.empty()) buffer.erase(0, 1);
+        if (!buffer.empty()) {
+            buffer.erase(0, 1);
+        }
+
         buffer += getRandomChar();
         std::cout << "Бегущая строка: " << buffer << std::endl;
 
-        if (sync) LeaveCriticalSection(&cs);
+        if (sync) {
+            LeaveCriticalSection(&cs);
+        }
+
         Sleep(100);
     }
     return 0;
@@ -31,7 +39,9 @@ DWORD WINAPI RunningLine(LPVOID) {
 
 DWORD WINAPI ModifyPunctuation(LPVOID) {
     for (int i = 0; i < 12; ++i) {
-        if (sync) EnterCriticalSection(&cs);
+        if (sync) {
+            EnterCriticalSection(&cs);
+        }
 
         if (rand() % 2 == 0 && !buffer.empty()) {
             int pos = rand() % (buffer.length() + 1);
@@ -48,7 +58,10 @@ DWORD WINAPI ModifyPunctuation(LPVOID) {
             }
         }
 
-        if (sync) LeaveCriticalSection(&cs);
+        if (sync) {
+            LeaveCriticalSection(&cs);
+        }
+
         Sleep(120);
     }
     return 0;
