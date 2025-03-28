@@ -45,3 +45,4 @@ public:
     bool isFull() const;
     ~ProductStack();
 };
+

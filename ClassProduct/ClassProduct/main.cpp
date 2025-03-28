@@ -12,19 +12,19 @@ void runNormalDemo() {
         demo.push(new ConcreteProduct("Сок", 120.99));
         demo.push(new ConcreteProduct("Яблоки", 76.0));
 
-        std::cout << "Добавлены продукты:\n";
-        while (!demo.isEmpty()) {
+        std::cout << "Добавленные продукты:\n";
+        for (int i = 0; i < 5; ++i) {
             Product* p = demo.pop();
             std::cout << p->getInfo() << std::endl;
             delete p;
         }
+
     }
     catch (const std::exception& e) {
         std::cout << "Исключение: " << e.what() << std::endl;
     }
     std::cout << "============================================\n\n";
 }
-
 
 int main() {
     SetConsoleOutputCP(1251);
@@ -48,14 +48,10 @@ int main() {
     }
 
     try {
-        std::cout << "\nИзвлечение всех продуктов из стека:\n";
-        while (!stack.isEmpty()) {
-            Product* p = stack.pop();
-            std::cout << p->getInfo() << std::endl;
-            delete p;
-        }
-
         std::cout << "\nПопытка извлечь из пустого стека:\n";
+        while (!stack.isEmpty()) {
+            delete stack.pop();
+        }
         stack.pop();
     }
     catch (const std::exception& e) {

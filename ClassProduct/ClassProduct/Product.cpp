@@ -13,13 +13,19 @@ std::string ConcreteProduct::getInfo() const {
 ProductStack::ProductStack() : top(-1) {}
 
 void ProductStack::push(Product* product) {
-    if (product == nullptr) throw NullProductException();
-    if (isFull()) throw StackFullException();
+    if (product == nullptr) {
+        throw NullProductException();
+    }
+    if (isFull()) {
+        throw StackFullException();
+    }
     items[++top] = product;
 }
 
 Product* ProductStack::pop() {
-    if (isEmpty()) throw StackEmptyException();
+    if (isEmpty()) {
+        throw StackEmptyException();
+    }
     return items[top--];
 }
 
