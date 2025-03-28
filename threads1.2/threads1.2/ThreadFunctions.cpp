@@ -1,6 +1,5 @@
-ï»¿#include <windows.h>
+#include "ThreadFunctions.h"
 #include <iostream>
-#include <string>
 #include <ctime>
 
 CRITICAL_SECTION cs;
@@ -22,7 +21,7 @@ DWORD WINAPI RunningLine(LPVOID) {
 
         if (!buffer.empty()) buffer.erase(0, 1);
         buffer += getRandomChar();
-        std::cout << "Ð‘ÐµÐ³ÑƒÑ‰Ð°Ñ ÑÑ‚Ñ€Ð¾ÐºÐ°: " << buffer << std::endl;
+        std::cout << "Áåãóùàÿ ñòðîêà: " << buffer << std::endl;
 
         if (sync) LeaveCriticalSection(&cs);
         Sleep(100);
@@ -37,13 +36,13 @@ DWORD WINAPI ModifyPunctuation(LPVOID) {
         if (rand() % 2 == 0 && !buffer.empty()) {
             int pos = rand() % (buffer.length() + 1);
             buffer.insert(pos, 1, getRandomPunct());
-            std::cout << "Ð”Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð·Ð½Ð°ÐºÐ° Ð¿Ñ€ÐµÐ¿Ð¸Ð½Ð°Ð½Ð¸Ñ: " << buffer << std::endl;
+            std::cout << "Äîáàâëåíèå çíàêà ïðåïèíàíèÿ: " << buffer << std::endl;
         }
         else {
             for (size_t i = 0; i < buffer.size(); ++i) {
                 if (ispunct(buffer[i])) {
                     buffer.erase(i, 1);
-                    std::cout << "Ð£Ð´Ð°Ð»ÐµÐ½Ð¸Ðµ Ð·Ð½Ð°ÐºÐ° Ð¿Ñ€ÐµÐ¿Ð¸Ð½Ð°Ð½Ð¸Ñ: " << buffer << std::endl;
+                    std::cout << "Óäàëåíèå çíàêà ïðåïèíàíèÿ: " << buffer << std::endl;
                     break;
                 }
             }
@@ -60,7 +59,7 @@ void RunMode(const char* modeName, bool syncMode) {
     buffer = ">>>";
 
     std::cout << "\n" << modeName << std::endl;
-    std::cout << "ÐÐ°Ñ‡Ð°Ð»ÑŒÐ½Ð°Ñ ÑÑ‚Ñ€Ð¾ÐºÐ°: " << buffer << std::endl;
+    std::cout << "Íà÷àëüíàÿ ñòðîêà: " << buffer << std::endl;
 
     HANDLE t1 = CreateThread(NULL, 0, RunningLine, NULL, 0, NULL);
     HANDLE t2 = CreateThread(NULL, 0, ModifyPunctuation, NULL, 0, NULL);
@@ -70,17 +69,4 @@ void RunMode(const char* modeName, bool syncMode) {
 
     CloseHandle(t1);
     CloseHandle(t2);
-}
-
-int main() {
-    SetConsoleOutputCP(1251);
-    srand((unsigned)time(0));
-    InitializeCriticalSection(&cs);
-
-    RunMode("Ð¡Ð¸Ð½Ñ…Ñ€Ð¾Ð½Ð½Ñ‹Ð¹ Ñ€ÐµÐ¶Ð¸Ð¼", true);
-    RunMode("ÐÑÐ¸Ð½Ñ…Ñ€Ð¾Ð½Ð½Ñ‹Ð¹ Ñ€ÐµÐ¶Ð¸Ð¼", false);
-
-    DeleteCriticalSection(&cs);
-    std::cout << "\nÐ Ð°Ð±Ð¾Ñ‚Ð° Ð·Ð°Ð²ÐµÑ€ÑˆÐµÐ½Ð°." << std::endl;
-    return 0;
 }
