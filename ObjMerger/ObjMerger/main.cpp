@@ -48,9 +48,10 @@ public:
                 iss.ignore(2);
                 iss >> v.x >> v.y >> v.z;
 
-                // Пытаемся прочитать цвет (если есть)
                 if (!(iss >> v.r >> v.g >> v.b)) {
-                    v.r = v.g = v.b = 255;
+                    v.r = 255;
+                    v.g = 255;
+                    v.b = 255;
                 }
 
                 vertices.push_back(v);
@@ -59,7 +60,9 @@ public:
                 Triangle t;
                 iss.ignore(2);
                 iss >> t.v1 >> t.v2 >> t.v3;
-                t.v1--; t.v2--; t.v3--;
+                t.v1--;
+                t.v2--;
+                t.v3--;
                 triangles.push_back(t);
             }
         }
@@ -74,25 +77,29 @@ public:
             return;
         }
 
-        for (const auto& v : vertices)
+        for (const auto& v : vertices) {
             out << "v " << v.x << " " << v.y << " " << v.z << " "
-            << v.r << " " << v.g << " " << v.b << "\n";
+                << v.r << " " << v.g << " " << v.b << "\n";
+        }
 
-        for (const auto& t : triangles)
+        for (const auto& t : triangles) {
             out << "f " << t.v1 + 1 << " " << t.v2 + 1 << " " << t.v3 + 1 << "\n";
+        }
 
         std::cout << "Файл \"" << filename << "\" успешно сохранён.\n";
     }
 
     void print() const {
         std::cout << "\nВершины:\n";
-        for (const auto& v : vertices)
+        for (const auto& v : vertices) {
             std::cout << "v " << v.x << " " << v.y << " " << v.z
-            << " " << v.r << " " << v.g << " " << v.b << "\n";
+                << " " << v.r << " " << v.g << " " << v.b << "\n";
+        }
 
         std::cout << "\nТреугольники:\n";
-        for (const auto& t : triangles)
+        for (const auto& t : triangles) {
             std::cout << "f " << t.v1 + 1 << " " << t.v2 + 1 << " " << t.v3 + 1 << "\n";
+        }
     }
 
     void addColor(int r, int g, int b) {
@@ -106,8 +113,9 @@ public:
     void merge(const Model& other) {
         std::vector<Vec3> currentVec(vertices.begin(), vertices.end());
         std::map<Vec3, int> vertexMap;
-        for (size_t i = 0; i < currentVec.size(); ++i)
+        for (size_t i = 0; i < currentVec.size(); ++i) {
             vertexMap[currentVec[i]] = static_cast<int>(i);
+        }
 
         std::vector<Vec3> otherVec(other.vertices.begin(), other.vertices.end());
         for (const auto& v : otherVec) {
@@ -130,8 +138,9 @@ public:
 
     void removeInternalVertices() {
         std::set<int> usedIndices;
-        for (const auto& t : triangles)
+        for (const auto& t : triangles) {
             usedIndices.insert({ t.v1, t.v2, t.v3 });
+        }
 
         std::list<Vec3> newVertices;
         std::map<int, int> oldToNew;
