@@ -45,7 +45,6 @@ class MatrixProcessor:
     def print_matching_pairs(matrices):
         found = False
         n = len(matrices)
-        # Сохраним уже выведенные пары
         printed_pairs = set()
         for i in range(n):
             for j in range(i+1, n):  # Только (i, j) где i < j
